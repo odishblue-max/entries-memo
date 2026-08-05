@@ -465,15 +465,49 @@ button.status-btn:active {
 
 .legend {
   flex: 0 0 auto;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.legend-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 10px;
+}
+
+.legend-bar-label {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.legend-toggle-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 5px;
+  touch-action: manipulation;
+}
+
+.legend-toggle-btn:active {
+  opacity: 0.6;
+}
+
+.legend-content {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  background: #fff;
-  border-top: 1px solid var(--border);
-  padding: 4px 10px;
+  padding: 0 10px 4px;
   font-size: 10px;
-  color: var(--muted);
+}
+
+.legend-content.collapsed {
+  display: none;
 }
 
 .legend-item {

@@ -2,6 +2,7 @@
   "use strict";
 
   var STORAGE_KEY = "pokerEntryMemo.state.v1";
+  var LEGEND_COLLAPSED_KEY = "pokerEntryMemo.legendCollapsed.v1";
 
   var state = loadState();
 
@@ -259,8 +260,28 @@
     listEl.innerHTML = state.participants.map(participantCardHtml).join("");
   }
 
+  function initLegendToggle() {
+    var content = document.getElementById("legend-content");
+    var toggleBtn = document.getElementById("legend-toggle-btn");
+    var collapsed = localStorage.getItem(LEGEND_COLLAPSED_KEY) === "1";
+
+    function apply() {
+      content.classList.toggle("collapsed", collapsed);
+      toggleBtn.textContent = collapsed ? "開く" : "閉じる";
+    }
+
+    apply();
+
+    toggleBtn.addEventListener("click", function () {
+      collapsed = !collapsed;
+      localStorage.setItem(LEGEND_COLLAPSED_KEY, collapsed ? "1" : "0");
+      apply();
+    });
+  }
+
   function init() {
     render();
+    initLegendToggle();
 
     document.getElementById("add-name-form").addEventListener("submit", function (e) {
       e.preventDefault();
