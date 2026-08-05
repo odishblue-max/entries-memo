@@ -3,6 +3,8 @@
   --red-bg: #fdecec;
   --blue: #0b6bcb;
   --blue-bg: #e8f1fb;
+  --green: #189858;
+  --green-bg: #e3f6ec;
   --ink: #1b2430;
   --muted: #6b7684;
   --border: #e2e6eb;
@@ -123,12 +125,88 @@ button {
   margin-bottom: 6px;
 }
 
-.participant-list {
+.app-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0 8px;
+}
+
+.waiting-panel {
+  flex: 0 0 130px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 6px 8px;
+  position: sticky;
+  top: 44px;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+
+.waiting-panel h2 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 0 4px;
+}
+
+.waiting-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.waiting-list li {
+  font-size: 11px;
+  padding: 3px 6px;
+  background: var(--green-bg);
+  color: var(--ink);
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.waiting-list li.waiting-empty {
+  background: transparent;
+  color: var(--muted);
+  padding: 3px 0;
+}
+
+.main-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.participant-list {
+  padding: 6px 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 4px;
   align-items: start;
+}
+
+@media (max-width: 600px) {
+  .app-body {
+    flex-direction: column;
+  }
+
+  .waiting-panel {
+    flex: 0 0 auto;
+    width: 100%;
+    position: static;
+    max-height: 100px;
+    overflow-y: auto;
+  }
+
+  .waiting-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 
 .participant-card {
@@ -146,11 +224,63 @@ button {
 }
 
 .participant-name {
+  flex: 1;
+  min-width: 0;
   font-size: 13px;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.status-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+button.status-btn:active {
+  opacity: 0.6;
+}
+
+.status-btn.seatopen-red {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.status-btn.seatopen-blue {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+.status-btn.playing-green {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.status-btn.waiting-green {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
 }
 
 .remove-btn {

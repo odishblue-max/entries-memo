@@ -5,6 +5,10 @@
 
   var state = loadState();
 
+  function defaultStatus() {
+    return { seatOpen: "white", waiting: "white", waitingSince: null };
+  }
+
   function loadState() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
@@ -13,6 +17,9 @@
       if (!parsed || !Array.isArray(parsed.participants)) {
         return { participants: [] };
       }
+      parsed.participants.forEach(function (p) {
+        if (!p.status) p.status = defaultStatus();
+      });
       return parsed;
     } catch (e) {
       return { participants: [] };
@@ -47,7 +54,8 @@
       id: uid(),
       name: trimmed,
       chip: [],
-      kaikei: []
+      kaikei: [],
+      status: defaultStatus()
     });
     saveState();
     return true;
@@ -75,7 +83,43 @@
     var p = findParticipant(id);
     if (!p) return;
     p[category].push({ reflected: false });
+    if (p.status.seatOpen === "blue") {
+      p.status.seatOpen = "white";
+    }
+    if (p.status.waiting === "green") {
+      p.status.waiting = "white";
+      p.status.waitingSince = null;
+    }
     saveState();
+  }
+
+  function cycleSeatOpen(id) {
+    var p = findParticipant(id);
+    if (!p) return;
+    var order = ["white", "red", "blue"];
+    var next = order[(order.indexOf(p.status.seatOpen) + 1) % order.length];
+    p.status.seatOpen = next;
+    saveState();
+  }
+
+  function toggleWaiting(id) {
+    var p = findParticipant(id);
+    if (!p) return;
+    if (p.status.waiting === "green") {
+      p.status.waiting = "white";
+      p.status.waitingSince = null;
+    } else {
+      p.status.waiting = "green";
+      p.status.waitingSince = Date.now();
+    }
+    saveState();
+  }
+
+  function playingColor(p) {
+    var hasEntries = p.chip.length + p.kaikei.length > 0;
+    if (!hasEntries) return "white";
+    if (p.status.seatOpen !== "white") return "white";
+    return "green";
   }
 
   function undoEntry(id, category) {
@@ -142,11 +186,24 @@
     );
   }
 
+  function statusButtonsHtml(p) {
+    return (
+      '<div class="status-buttons">' +
+        '<button type="button" class="status-btn seatopen-' + p.status.seatOpen +
+          '" data-action="cycle-seatopen" data-id="' + p.id + '" title="シートオープン">開</button>' +
+        '<span class="status-btn playing-' + playingColor(p) + '" title="プレイ中（自動表示）">中</span>' +
+        '<button type="button" class="status-btn waiting-' + p.status.waiting +
+          '" data-action="toggle-waiting" data-id="' + p.id + '" title="ウェイティング">待</button>' +
+      "</div>"
+    );
+  }
+
   function participantCardHtml(p) {
     return (
       '<div class="participant-card" data-participant-id="' + p.id + '">' +
         '<div class="participant-header">' +
           '<span class="participant-name">' + escapeHtml(p.name) + "</span>" +
+          statusButtonsHtml(p) +
           '<button type="button" class="remove-btn" data-action="remove-participant" data-id="' +
             p.id + '" aria-label="削除">×</button>' +
         "</div>" +
@@ -156,9 +213,24 @@
     );
   }
 
+  function waitingListHtml() {
+    var waitingParticipants = state.participants
+      .filter(function (p) { return p.status.waiting === "green"; })
+      .sort(function (a, b) {
+        return (a.status.waitingSince || 0) - (b.status.waitingSince || 0);
+      });
+    if (waitingParticipants.length === 0) {
+      return '<li class="waiting-empty">なし</li>';
+    }
+    return waitingParticipants.map(function (p) {
+      return "<li>" + escapeHtml(p.name) + "</li>";
+    }).join("");
+  }
+
   function render() {
     var listEl = document.getElementById("participant-list");
     var emptyEl = document.getElementById("empty-message");
+    document.getElementById("waiting-list").innerHTML = waitingListHtml();
     if (state.participants.length === 0) {
       listEl.innerHTML = "";
       emptyEl.hidden = false;
@@ -214,6 +286,12 @@
       } else if (action === "toggle-chip") {
         var index = parseInt(target.dataset.index, 10);
         toggleChip(id, category, index);
+        render();
+      } else if (action === "cycle-seatopen") {
+        cycleSeatOpen(id);
+        render();
+      } else if (action === "toggle-waiting") {
+        toggleWaiting(id);
         render();
       } else if (action === "remove-participant") {
         var p = findParticipant(id);

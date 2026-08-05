@@ -25,14 +25,23 @@
   </details>
 </section>
 
-<main id="participant-list" class="participant-list" aria-live="polite"></main>
+<div class="app-body">
+  <aside class="waiting-panel">
+    <h2>ウェイティング</h2>
+    <ol id="waiting-list" class="waiting-list"></ol>
+  </aside>
 
-<p id="empty-message" class="empty-message" hidden>参加者がいません。上の欄から追加してください。</p>
+  <div class="main-panel">
+    <main id="participant-list" class="participant-list" aria-live="polite"></main>
+    <p id="empty-message" class="empty-message" hidden>参加者がいません。上の欄から追加してください。</p>
+  </div>
+</div>
 
 <footer class="legend">
   <span class="legend-item"><span class="legend-swatch red"></span>未反映</span>
   <span class="legend-item"><span class="legend-swatch blue"></span>反映済み</span>
   <span class="legend-item legend-note">✓を直接タップ＝反映⇄未反映の切替／＋＝エントリー追加／戻＝取消</span>
+  <span class="legend-item legend-note">開＝シートオープン(白→赤→青)／中＝プレイ中(自動) ／待＝ウェイティング(白⇄緑)</span>
 </footer>
 
 <script src="js/app.js"></script>
