@@ -85,19 +85,13 @@
     saveState();
   }
 
-  // Reflects the oldest not-yet-reflected stroke. Returns true if a
-  // stroke changed state, false if nothing was pending.
-  function toggleReflect(id, category) {
+  function toggleChip(id, category, index) {
     var p = findParticipant(id);
-    if (!p) return false;
-    for (var i = 0; i < p[category].length; i++) {
-      if (!p[category][i].reflected) {
-        p[category][i].reflected = true;
-        saveState();
-        return true;
-      }
-    }
-    return false;
+    if (!p) return;
+    var stroke = p[category][index];
+    if (!stroke) return;
+    stroke.reflected = !stroke.reflected;
+    saveState();
   }
 
   function resetAll() {
@@ -117,11 +111,13 @@
     });
   }
 
-  function chipsHtml(strokes) {
+  function chipsHtml(p, category, strokes) {
     if (strokes.length === 0) return "";
     return strokes.map(function (s, i) {
       var cls = s.reflected ? "tally-chip blue" : "tally-chip red";
-      return '<span class="' + cls + '">✓' + (i + 1) + "</span>";
+      return '<span class="' + cls + '" data-action="toggle-chip" data-id="' +
+        p.id + '" data-category="' + category + '" data-index="' + i +
+        '">✓' + (i + 1) + "</span>";
     }).join("");
   }
 
@@ -131,9 +127,8 @@
     return (
       '<div class="counter-row">' +
         '<div class="counter-label">' + label + "</div>" +
-        '<div class="tally-display" data-action="toggle-reflect" data-id="' +
-          p.id + '" data-category="' + category + '">' +
-          chipsHtml(strokes) +
+        '<div class="tally-display">' +
+          chipsHtml(p, category, strokes) +
         "</div>" +
         '<div class="counter-count">' + strokes.length + "</div>" +
         '<div class="counter-buttons">' +
@@ -216,15 +211,10 @@
       } else if (action === "undo-entry") {
         undoEntry(id, category);
         render();
-      } else if (action === "toggle-reflect") {
-        var changed = toggleReflect(id, category);
-        if (changed) {
-          render();
-        } else {
-          target.classList.remove("shake");
-          void target.offsetWidth;
-          target.classList.add("shake");
-        }
+      } else if (action === "toggle-chip") {
+        var index = parseInt(target.dataset.index, 10);
+        toggleChip(id, category, index);
+        render();
       } else if (action === "remove-participant") {
         var p = findParticipant(id);
         var name = p ? p.name : "";

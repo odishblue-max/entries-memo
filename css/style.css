@@ -204,32 +204,23 @@ button {
   background: #fafbfc;
 }
 
-.tally-display:active {
-  background: #f0f2f4;
-}
-
-.tally-display.shake {
-  animation: shake 0.3s ease;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
-}
-
 .tally-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
-  height: 18px;
-  padding: 0 3px;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 4px;
   border-radius: 4px;
   font-size: 10px;
   font-weight: 700;
   color: #fff;
   line-height: 1;
+  touch-action: manipulation;
+}
+
+.tally-chip:active {
+  opacity: 0.6;
 }
 
 .tally-chip.red {
