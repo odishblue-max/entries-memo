@@ -3,20 +3,6 @@
 
   var STORAGE_KEY = "pokerEntryMemo.state.v1";
 
-  // Stroke order approximating 正 (top bar, center vertical, then three
-  // more horizontal bars) drawn in a 100x100 box, one path per stroke.
-  var STROKE_PATHS = [
-    "M25,14 L75,14",
-    "M50,14 L50,88",
-    "M16,39 L84,39",
-    "M16,64 L84,64",
-    "M10,88 L90,88"
-  ];
-
-  var COLOR_RED = "#e5484d";
-  var COLOR_BLUE = "#0b6bcb";
-  var COLOR_GUIDE = "#d4d9df";
-
   var state = loadState();
 
   function loadState() {
@@ -131,41 +117,12 @@
     });
   }
 
-  function kanjiSvg(groupStrokes) {
-    var paths = STROKE_PATHS.map(function (d, i) {
-      var info = groupStrokes[i];
-      var color = COLOR_GUIDE;
-      var opacity = 0.3;
-      var width = 6;
-      if (info) {
-        color = info.reflected ? COLOR_BLUE : COLOR_RED;
-        opacity = 1;
-        width = 9;
-      }
-      return (
-        '<path d="' + d + '" stroke="' + color + '" stroke-width="' +
-        width + '" stroke-linecap="round" fill="none" opacity="' +
-        opacity + '"/>'
-      );
+  function chipsHtml(strokes) {
+    if (strokes.length === 0) return "";
+    return strokes.map(function (s, i) {
+      var cls = s.reflected ? "tally-chip blue" : "tally-chip red";
+      return '<span class="' + cls + '">✓' + (i + 1) + "</span>";
     }).join("");
-    return '<svg class="kanji" viewBox="0 0 100 100" width="30" height="30">' + paths + "</svg>";
-  }
-
-  function svgForStrokes(strokes) {
-    var total = strokes.length;
-    var fullGroups = Math.floor(total / 5);
-    var remainder = total % 5;
-    var groups = [];
-    for (var g = 0; g < fullGroups; g++) {
-      groups.push(strokes.slice(g * 5, g * 5 + 5));
-    }
-    if (remainder > 0) {
-      groups.push(strokes.slice(fullGroups * 5));
-    }
-    if (groups.length === 0) {
-      groups.push([]);
-    }
-    return groups.map(kanjiSvg).join("");
   }
 
   function counterRowHtml(p, category, label) {
@@ -174,9 +131,9 @@
     return (
       '<div class="counter-row">' +
         '<div class="counter-label">' + label + "</div>" +
-        '<div class="kanji-display" data-action="toggle-reflect" data-id="' +
+        '<div class="tally-display" data-action="toggle-reflect" data-id="' +
           p.id + '" data-category="' + category + '">' +
-          svgForStrokes(strokes) +
+          chipsHtml(strokes) +
         "</div>" +
         '<div class="counter-count">' + strokes.length + "</div>" +
         '<div class="counter-buttons">' +
@@ -184,7 +141,7 @@
             p.id + '" data-category="' + category + '">＋</button>' +
           '<button type="button" class="btn-undo" ' + undoDisabled +
             ' data-action="undo-entry" data-id="' + p.id +
-            '" data-category="' + category + '">戻す</button>' +
+            '" data-category="' + category + '">戻</button>' +
         "</div>" +
       "</div>"
     );

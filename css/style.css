@@ -3,7 +3,6 @@
   --red-bg: #fdecec;
   --blue: #0b6bcb;
   --blue-bg: #e8f1fb;
-  --guide: #d4d9df;
   --ink: #1b2430;
   --muted: #6b7684;
   --border: #e2e6eb;
@@ -26,10 +25,6 @@ html, body {
   user-select: none;
 }
 
-body {
-  padding-bottom: 96px;
-}
-
 button {
   font-family: inherit;
   cursor: pointer;
@@ -43,23 +38,23 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 16px;
+  padding: 8px 12px;
   background: var(--ink);
   color: #fff;
 }
 
 .app-header h1 {
-  font-size: 18px;
+  font-size: 15px;
   margin: 0;
 }
 
 .btn {
   border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-size: 14px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
   font-weight: 600;
-  min-height: 40px;
+  min-height: 30px;
   touch-action: manipulation;
 }
 
@@ -80,88 +75,93 @@ button {
 }
 
 .add-panel {
-  padding: 12px 16px;
+  padding: 6px 10px;
 }
 
 .add-row {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 #new-name-input {
   flex: 1;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 16px;
-  min-height: 40px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 15px;
+  min-height: 30px;
 }
 
 .import-details {
-  margin-top: 10px;
+  margin-top: 6px;
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 12px;
+  border-radius: 8px;
+  padding: 4px 10px;
 }
 
 .import-details summary {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--muted);
   padding: 4px 0;
 }
 
 .import-hint {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
-  margin: 6px 0;
+  margin: 4px 0;
 }
 
 #import-textarea {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 8px;
-  font-size: 14px;
+  padding: 6px;
+  font-size: 13px;
   resize: vertical;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .participant-list {
-  padding: 8px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 6px 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 4px;
+  align-items: start;
 }
 
 .participant-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px;
+  border-radius: 8px;
+  padding: 4px 6px;
 }
 
 .participant-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  gap: 4px;
 }
 
 .participant-name {
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .remove-btn {
   border: none;
   background: transparent;
   color: var(--muted);
-  font-size: 20px;
+  font-size: 15px;
   line-height: 1;
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .remove-btn:active {
@@ -172,8 +172,8 @@ button {
 .counter-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 0;
+  gap: 4px;
+  padding: 3px 0;
 }
 
 .counter-row + .counter-row {
@@ -181,30 +181,34 @@ button {
 }
 
 .counter-label {
-  width: 68px;
+  width: 58px;
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--muted);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.kanji-display {
+.tally-display {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 2px;
-  min-height: 40px;
-  padding: 4px 6px;
-  border-radius: 8px;
+  min-height: 22px;
+  padding: 2px 4px;
+  border-radius: 6px;
   background: #fafbfc;
 }
 
-.kanji-display:active {
+.tally-display:active {
   background: #f0f2f4;
 }
 
-.kanji-display.shake {
+.tally-display.shake {
   animation: shake 0.3s ease;
 }
 
@@ -214,32 +218,51 @@ button {
   75% { transform: translateX(4px); }
 }
 
-.kanji {
-  display: block;
+.tally-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.tally-chip.red {
+  background: var(--red);
+}
+
+.tally-chip.blue {
+  background: var(--blue);
 }
 
 .counter-count {
-  width: 28px;
+  width: 20px;
   flex-shrink: 0;
   text-align: right;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--muted);
 }
 
 .counter-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  gap: 3px;
   flex-shrink: 0;
 }
 
 .btn-add, .btn-undo {
   border: none;
-  border-radius: 8px;
-  min-width: 52px;
-  min-height: 30px;
-  font-size: 13px;
+  border-radius: 6px;
+  min-width: 26px;
+  min-height: 22px;
+  padding: 0 4px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -266,30 +289,26 @@ button {
 }
 
 .legend {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   flex-wrap: wrap;
   background: #fff;
   border-top: 1px solid var(--border);
-  padding: 8px 16px;
-  font-size: 12px;
+  padding: 4px 10px;
+  font-size: 10px;
   color: var(--muted);
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .legend-swatch {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 3px;
   display: inline-block;
 }
@@ -304,5 +323,5 @@ button {
 
 .legend-note {
   flex-basis: 100%;
-  font-size: 11px;
+  font-size: 10px;
 }
