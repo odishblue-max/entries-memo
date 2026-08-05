@@ -174,7 +174,7 @@
         p.id + '" data-category="' + category + '" data-index="' + i +
         '">✓' + (i + 1) + "</span>";
       if (category !== "kaikei") return reflectChip;
-      var paidCls = s.paid ? "paid-chip green" : "paid-chip red";
+      var paidCls = s.paid ? "paid-chip blue" : "paid-chip red";
       var paidChip = '<span class="' + paidCls + '" data-action="toggle-paid" data-id="' +
         p.id + '" data-index="' + i + '">￥' + (i + 1) + "</span>";
       return '<span class="entry-pair">' + reflectChip + paidChip + "</span>";

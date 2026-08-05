@@ -411,8 +411,8 @@ button.status-btn:active {
   background: var(--red);
 }
 
-.paid-chip.green {
-  background: var(--green);
+.paid-chip.blue {
+  background: var(--blue);
 }
 
 .counter-count {
