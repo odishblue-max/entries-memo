@@ -190,10 +190,10 @@
     return (
       '<div class="status-buttons">' +
         '<button type="button" class="status-btn seatopen-' + p.status.seatOpen +
-          '" data-action="cycle-seatopen" data-id="' + p.id + '" title="シートオープン">シート</button>' +
-        '<span class="status-btn playing-' + playingColor(p) + '" title="プレイ中（自動表示）">プレイ</span>' +
+          '" data-action="cycle-seatopen" data-id="' + p.id + '" title="シートオープン">ｼｰﾄｵｰﾌﾟﾝ</button>' +
+        '<span class="status-btn playing-' + playingColor(p) + '" title="プレイ中（自動表示）">ﾌﾟﾚｲ中</span>' +
         '<button type="button" class="status-btn waiting-' + p.status.waiting +
-          '" data-action="toggle-waiting" data-id="' + p.id + '" title="ウェイティング">ウェイト</button>' +
+          '" data-action="toggle-waiting" data-id="' + p.id + '" title="ウェイティング">ｳｪｲﾃｨﾝｸﾞ</button>' +
       "</div>"
     );
   }

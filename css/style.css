@@ -218,7 +218,7 @@ button {
 .participant-list {
   padding: 6px 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 4px;
   align-items: start;
 }
@@ -263,7 +263,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 34px;
+  min-width: 46px;
   height: 20px;
   border: 1px solid var(--border);
   border-radius: 5px;
@@ -273,6 +273,7 @@ button {
   font-weight: 700;
   padding: 0 3px;
   white-space: nowrap;
+  letter-spacing: -0.2px;
   touch-action: manipulation;
 }
 
