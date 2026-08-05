@@ -383,6 +383,38 @@ button.status-btn:active {
   background: var(--blue);
 }
 
+.entry-pair {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.paid-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.paid-chip:active {
+  opacity: 0.6;
+}
+
+.paid-chip.red {
+  background: var(--red);
+}
+
+.paid-chip.green {
+  background: var(--green);
+}
+
 .counter-count {
   width: 20px;
   flex-shrink: 0;

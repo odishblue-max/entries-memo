@@ -82,7 +82,9 @@
   function addEntry(id, category) {
     var p = findParticipant(id);
     if (!p) return;
-    p[category].push({ reflected: false });
+    var stroke = { reflected: false };
+    if (category === "kaikei") stroke.paid = false;
+    p[category].push(stroke);
     if (p.status.seatOpen === "blue") {
       p.status.seatOpen = "white";
     }
@@ -138,6 +140,15 @@
     saveState();
   }
 
+  function toggleKaikeiPaid(id, index) {
+    var p = findParticipant(id);
+    if (!p) return;
+    var stroke = p.kaikei[index];
+    if (!stroke) return;
+    stroke.paid = !stroke.paid;
+    saveState();
+  }
+
   function resetAll() {
     state.participants = [];
     saveState();
@@ -158,10 +169,15 @@
   function chipsHtml(p, category, strokes) {
     if (strokes.length === 0) return "";
     return strokes.map(function (s, i) {
-      var cls = s.reflected ? "tally-chip blue" : "tally-chip red";
-      return '<span class="' + cls + '" data-action="toggle-chip" data-id="' +
+      var reflectCls = s.reflected ? "tally-chip blue" : "tally-chip red";
+      var reflectChip = '<span class="' + reflectCls + '" data-action="toggle-chip" data-id="' +
         p.id + '" data-category="' + category + '" data-index="' + i +
         '">✓' + (i + 1) + "</span>";
+      if (category !== "kaikei") return reflectChip;
+      var paidCls = s.paid ? "paid-chip green" : "paid-chip red";
+      var paidChip = '<span class="' + paidCls + '" data-action="toggle-paid" data-id="' +
+        p.id + '" data-index="' + i + '">￥' + (i + 1) + "</span>";
+      return '<span class="entry-pair">' + reflectChip + paidChip + "</span>";
     }).join("");
   }
 
@@ -289,6 +305,10 @@
       } else if (action === "toggle-chip") {
         var index = parseInt(target.dataset.index, 10);
         toggleChip(id, category, index);
+        render();
+      } else if (action === "toggle-paid") {
+        var paidIndex = parseInt(target.dataset.index, 10);
+        toggleKaikeiPaid(id, paidIndex);
         render();
       } else if (action === "cycle-seatopen") {
         cycleSeatOpen(id);
