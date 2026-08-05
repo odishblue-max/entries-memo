@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>エントリー管理メモ</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>エントリー管理メモ</h1>
+  <button id="reset-all-btn" class="btn btn-danger-outline" type="button">全体リセット</button>
+</header>
+
+<section class="add-panel">
+  <form id="add-name-form" class="add-row">
+    <input id="new-name-input" type="text" placeholder="参加者名を入力" autocomplete="off" />
+    <button type="submit" class="btn btn-primary">追加</button>
+  </form>
+  <details class="import-details">
+    <summary>複数名をまとめて取込（コピペ）</summary>
+    <p class="import-hint">checkInOutページの参加者名をコピーして、1行に1名ずつ貼り付けてください。</p>
+    <textarea id="import-textarea" rows="4" placeholder="山田太郎&#10;佐藤花子&#10;鈴木一郎"></textarea>
+    <button id="import-btn" type="button" class="btn btn-secondary">取込</button>
+  </details>
+</section>
+
+<main id="participant-list" class="participant-list" aria-live="polite"></main>
+
+<p id="empty-message" class="empty-message" hidden>参加者がいません。上の欄から追加してください。</p>
+
+<footer class="legend">
+  <span class="legend-item"><span class="legend-swatch red"></span>未反映</span>
+  <span class="legend-item"><span class="legend-swatch blue"></span>反映済み</span>
+  <span class="legend-item legend-note">正の字表示をタップ＝反映／＋＝エントリー追加／戻す＝取消</span>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
