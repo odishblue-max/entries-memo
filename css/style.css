@@ -18,6 +18,7 @@
 }
 
 html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
   background: var(--page-bg);
@@ -25,6 +26,7 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  overflow: hidden;
 }
 
 button {
@@ -32,10 +34,15 @@ button {
   cursor: pointer;
 }
 
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
 .app-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,6 +84,10 @@ button {
 }
 
 .add-panel {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--page-bg);
   padding: 6px 10px;
 }
 
@@ -126,25 +137,30 @@ button {
 }
 
 .app-body {
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 6px;
-  padding: 0 8px;
+  padding: 6px 8px;
+  overflow: hidden;
 }
 
 .waiting-panel {
-  flex: 0 0 130px;
+  flex: 0 0 150px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 6px 8px;
-  position: sticky;
-  top: 44px;
-  max-height: calc(100vh - 56px);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .waiting-panel h2 {
+  flex: 0 0 auto;
   font-size: 11px;
   font-weight: 700;
   color: var(--muted);
@@ -161,14 +177,28 @@ button {
 }
 
 .waiting-list li {
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
   padding: 3px 6px;
   background: var(--green-bg);
   color: var(--ink);
   border-radius: 6px;
-  white-space: nowrap;
+}
+
+.waiting-order {
+  flex-shrink: 0;
+  min-width: 16px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.waiting-name {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .waiting-list li.waiting-empty {
@@ -180,6 +210,9 @@ button {
 .main-panel {
   flex: 1;
   min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .participant-list {
@@ -191,21 +224,8 @@ button {
 }
 
 @media (max-width: 600px) {
-  .app-body {
-    flex-direction: column;
-  }
-
   .waiting-panel {
-    flex: 0 0 auto;
-    width: 100%;
-    position: static;
-    max-height: 100px;
-    overflow-y: auto;
-  }
-
-  .waiting-list {
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex: 0 0 100px;
   }
 }
 
@@ -243,15 +263,16 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
+  min-width: 34px;
   height: 20px;
   border: 1px solid var(--border);
   border-radius: 5px;
   background: #fff;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  padding: 0;
+  padding: 0 3px;
+  white-space: nowrap;
   touch-action: manipulation;
 }
 
@@ -410,6 +431,7 @@ button.status-btn:active {
 }
 
 .legend {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 10px;

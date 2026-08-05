@@ -7,42 +7,44 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header">
-  <h1>エントリー管理メモ</h1>
-  <button id="reset-all-btn" class="btn btn-danger-outline" type="button">全体リセット</button>
-</header>
+<div class="app-shell">
+  <header class="app-header">
+    <h1>エントリー管理メモ</h1>
+    <button id="reset-all-btn" class="btn btn-danger-outline" type="button">全体リセット</button>
+  </header>
 
-<section class="add-panel">
-  <form id="add-name-form" class="add-row">
-    <input id="new-name-input" type="text" placeholder="参加者名を入力" autocomplete="off" />
-    <button type="submit" class="btn btn-primary">追加</button>
-  </form>
-  <details class="import-details">
-    <summary>複数名をまとめて取込（コピペ）</summary>
-    <p class="import-hint">checkInOutページの参加者名をコピーして、1行に1名ずつ貼り付けてください。</p>
-    <textarea id="import-textarea" rows="4" placeholder="山田太郎&#10;佐藤花子&#10;鈴木一郎"></textarea>
-    <button id="import-btn" type="button" class="btn btn-secondary">取込</button>
-  </details>
-</section>
+  <div class="app-body">
+    <aside class="waiting-panel">
+      <h2>ウェイティング</h2>
+      <ol id="waiting-list" class="waiting-list"></ol>
+    </aside>
 
-<div class="app-body">
-  <aside class="waiting-panel">
-    <h2>ウェイティング</h2>
-    <ol id="waiting-list" class="waiting-list"></ol>
-  </aside>
+    <div class="main-panel">
+      <section class="add-panel">
+        <form id="add-name-form" class="add-row">
+          <input id="new-name-input" type="text" placeholder="参加者名を入力" autocomplete="off" />
+          <button type="submit" class="btn btn-primary">追加</button>
+        </form>
+        <details class="import-details">
+          <summary>複数名をまとめて取込（コピペ）</summary>
+          <p class="import-hint">checkInOutページの参加者名をコピーして、1行に1名ずつ貼り付けてください。</p>
+          <textarea id="import-textarea" rows="4" placeholder="山田太郎&#10;佐藤花子&#10;鈴木一郎"></textarea>
+          <button id="import-btn" type="button" class="btn btn-secondary">取込</button>
+        </details>
+      </section>
 
-  <div class="main-panel">
-    <main id="participant-list" class="participant-list" aria-live="polite"></main>
-    <p id="empty-message" class="empty-message" hidden>参加者がいません。上の欄から追加してください。</p>
+      <main id="participant-list" class="participant-list" aria-live="polite"></main>
+      <p id="empty-message" class="empty-message" hidden>参加者がいません。上の欄から追加してください。</p>
+    </div>
   </div>
-</div>
 
-<footer class="legend">
-  <span class="legend-item"><span class="legend-swatch red"></span>未反映</span>
-  <span class="legend-item"><span class="legend-swatch blue"></span>反映済み</span>
-  <span class="legend-item legend-note">✓を直接タップ＝反映⇄未反映の切替／＋＝エントリー追加／戻＝取消</span>
-  <span class="legend-item legend-note">開＝シートオープン(白→赤→青)／中＝プレイ中(自動) ／待＝ウェイティング(白⇄緑)</span>
-</footer>
+  <footer class="legend">
+    <span class="legend-item"><span class="legend-swatch red"></span>未反映</span>
+    <span class="legend-item"><span class="legend-swatch blue"></span>反映済み</span>
+    <span class="legend-item legend-note">✓を直接タップ＝反映⇄未反映の切替／＋＝エントリー追加／戻＝取消</span>
+    <span class="legend-item legend-note">シートオープン(白→赤→青)／プレイ(自動表示)／ウェイト(白⇄緑)</span>
+  </footer>
+</div>
 
 <script src="js/app.js"></script>
 </body>

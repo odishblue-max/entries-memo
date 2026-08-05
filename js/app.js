@@ -190,10 +190,10 @@
     return (
       '<div class="status-buttons">' +
         '<button type="button" class="status-btn seatopen-' + p.status.seatOpen +
-          '" data-action="cycle-seatopen" data-id="' + p.id + '" title="シートオープン">開</button>' +
-        '<span class="status-btn playing-' + playingColor(p) + '" title="プレイ中（自動表示）">中</span>' +
+          '" data-action="cycle-seatopen" data-id="' + p.id + '" title="シートオープン">シート</button>' +
+        '<span class="status-btn playing-' + playingColor(p) + '" title="プレイ中（自動表示）">プレイ</span>' +
         '<button type="button" class="status-btn waiting-' + p.status.waiting +
-          '" data-action="toggle-waiting" data-id="' + p.id + '" title="ウェイティング">待</button>' +
+          '" data-action="toggle-waiting" data-id="' + p.id + '" title="ウェイティング">ウェイト</button>' +
       "</div>"
     );
   }
@@ -222,8 +222,11 @@
     if (waitingParticipants.length === 0) {
       return '<li class="waiting-empty">なし</li>';
     }
-    return waitingParticipants.map(function (p) {
-      return "<li>" + escapeHtml(p.name) + "</li>";
+    return waitingParticipants.map(function (p, i) {
+      return (
+        "<li><span class=\"waiting-order\">" + (i + 1) + "</span>" +
+        "<span class=\"waiting-name\">" + escapeHtml(p.name) + "</span></li>"
+      );
     }).join("");
   }
 
