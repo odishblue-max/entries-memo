@@ -3,6 +3,7 @@
 
   var STORAGE_KEY = "pokerEntryMemo.state.v1";
   var LEGEND_COLLAPSED_KEY = "pokerEntryMemo.legendCollapsed.v1";
+  var WAITING_PANEL_COLLAPSED_KEY = "pokerEntryMemo.waitingPanelCollapsed.v1";
 
   var state = loadState();
 
@@ -279,9 +280,29 @@
     });
   }
 
+  function initWaitingPanelToggle() {
+    var panel = document.getElementById("waiting-panel");
+    var toggleBtn = document.getElementById("waiting-toggle-btn");
+    var collapsed = localStorage.getItem(WAITING_PANEL_COLLAPSED_KEY) === "1";
+
+    function apply() {
+      panel.classList.toggle("collapsed", collapsed);
+      toggleBtn.textContent = collapsed ? "›" : "‹";
+    }
+
+    apply();
+
+    toggleBtn.addEventListener("click", function () {
+      collapsed = !collapsed;
+      localStorage.setItem(WAITING_PANEL_COLLAPSED_KEY, collapsed ? "1" : "0");
+      apply();
+    });
+  }
+
   function init() {
     render();
     initLegendToggle();
+    initWaitingPanelToggle();
 
     document.getElementById("add-name-form").addEventListener("submit", function (e) {
       e.preventDefault();

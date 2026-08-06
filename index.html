@@ -14,8 +14,11 @@
   </header>
 
   <div class="app-body">
-    <aside class="waiting-panel">
-      <h2>ウェイティング</h2>
+    <aside class="waiting-panel" id="waiting-panel">
+      <div class="waiting-panel-header">
+        <h2 class="waiting-panel-title">ウェイティング</h2>
+        <button type="button" id="waiting-toggle-btn" class="panel-toggle-btn" aria-label="ウェイティングリストの開閉">‹</button>
+      </div>
       <ol id="waiting-list" class="waiting-list"></ol>
     </aside>
 
